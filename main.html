@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <i class="fas fa-file-alt text-3xl mr-3"></i>
+                        <h1 class="text-2xl font-bold">Smart Resume Builder</h1>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="previewBtn" class="bg-indigo-700 hover:bg-indigo-800 px-4 py-2 rounded-lg transition flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Preview
+                        </button>
+                        <button id="exportBtn" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition flex items-center">
+                            <i class="fas fa-file-pdf mr-2"></i> Export PDF
+                        </button>
+                        <button id="saveBtn" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition flex items-center">
+                            <i class="fas fa-save mr-2"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Input Form -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">Resume Details</h2>
+                        <button class="bg-indigo-100 text-indigo-600 hover:bg-indigo-200 px-3 py-2 rounded-lg text-sm transition flex items-center">
+                            <i class="fas fa-magic mr-1"></i> AI Enhance Entire Resume
+                        </button>
+                    </div>
+                    
+                    <!-- Personal Information -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-4 text-indigo-600 border-b pb-2 flex items-center">
+                            <i class="fas fa-user mr-2"></i> Personal Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" id="fullName" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="John Doe" value="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                <input type="text" id="jobTitle" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="Software Engineer" value="Senior Software Engineer">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="john.doe@example.com" value="john.doe@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="(123) 456-7890" value="(123) 456-7890">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                <input type="text" id="address" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="New York, NY" value="New York, NY">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">LinkedIn</label>
+                                <input type="text" id="linkedin" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500" placeholder="linkedin.com/in/johndoe" value="linkedin.com/in/johndoe">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-4 text-indigo-600 border-b pb-2 flex items-center">
+                            <i class="fas fa-star mr-2"></i> Professional Summary
+                        </h3>
+                        <textarea id="summary" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 h-32" placeholder="Experienced software engineer with 5+ years of experience in web development...">Experienced software engineer with 5+ years of expertise in full-stack web development. Skilled in JavaScript, React, Node.js, and modern cloud infrastructure. Proven track record of delivering scalable solutions that improve performance and user experience.</textarea>
+                        <button class="mt-2 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 px-3 py-1 rounded-lg text-sm transition flex items-center">
+                            <i class="fas fa-robot mr-1"></i> Enhance with AI
+                        </button>
+                    </div>
+
+                    <!-- Work Experience -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-4 text-indigo-600 border-b pb-2 flex items-center">
+                            <i class="fas fa-briefcase mr-2"></i> Work Experience
+                        </h3>
+                        <div class="space-y-4" id="experience-container">
+                            <div class="p-4 border rounded-lg relative experience-item">
+                                <button class="absolute top-3 right-3 text-gray-400 hover:text-red-500">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                        <input type="text" class="w-full px-4 py-2 border rounded-lg exp-title" placeholder="Senior Developer" value="Senior Full Stack Developer">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                                        <input type="text" class="w-full px-4 py-2 border rounded-lg exp-company" placeholder="Tech Corp Inc." value="Tech Innovations Inc.">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                        <input type="month" class="w-full px-4 py-2 border rounded-lg exp-start" value="2020-01">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                        <input type="month" class="w-full px-4 py-2 border rounded-lg exp-end" value="2023-06">
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                    <textarea class="w-full px-4 py-2 border rounded-lg h-24 exp-desc">- Led development of a React-based SaaS product serving 10,000+ users
+- Implemented CI/CD pipeline reducing deployment time by 40%
+- Mentored 3 junior developers and conducted code reviews
+- Optimized database queries improving API response time by 35%</textarea>
+                                </div>
+                                <button class="mt-2 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 px-3 py-1 rounded-lg text-sm transition flex items-center">
+                                    <i class="fas fa-robot mr-1"></i> Improve with AI
+                                </button>
+                            </div>
+                        </div>
+                        <button id="add-experience" class="mt-4 bg-gray-100 text-gray-700 hover:bg-gray-200 w-full py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-plus mr-2"></i> Add Experience
+                        </button>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-4 text-indigo-600 border-b pb-2 flex items-center">
+                            <i class="fas fa-graduation-cap mr-2"></i> Education
+                        </h3>
+                        <div class="space-y-4" id="education-container">
+                            <div class="p-4 border rounded-lg relative education-item">
+                                <button class="absolute top-3 right-3 text-gray-400 hover:text-red-500">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Degree</label>
+                                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-degree" placeholder="Bachelor of Science" value="Master of Computer Science">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Institution</label>
+                                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-institution" placeholder="University of Technology" value="Stanford University">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Graduation Year</label>
+                                        <input type="month" class="w-full px-4 py-2 border rounded-lg edu-date" value="2019-05">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">GPA</label>
+                                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-gpa" placeholder="GPA" value="3.8">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="add-education" class="mt-4 bg-gray-100 text-gray-700 hover:bg-gray-200 w-full py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-plus mr-2"></i> Add Education
+                        </button>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-medium mb-4 text-indigo-600 border-b pb-2 flex items-center">
+                            <i class="fas fa-tools mr-2"></i> Skills
+                        </h3>
+                        <div class="flex flex-wrap gap-2 mb-4" id="skills-container">
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                JavaScript <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                React <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                Node.js <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                MongoDB <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                            </span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm flex items-center">
+                                AWS <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                            </span>
+                        </div>
+                        <div class="flex">
+                            <input type="text" id="new-skill" class="flex-grow px-4 py-2 border rounded-l-lg" placeholder="Add a skill">
+                            <button id="add-skill" class="bg-indigo-600 text-white px-4 py-2 rounded-r-lg hover:bg-indigo-700">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Resume Preview</h2>
+                    <div id="resume" class="bg-white p-8 border border-gray-200 shadow resume-container">
+                        <div class="text-center mb-8">
+                            <h1 id="preview-name" class="text-3xl font-bold text-gray-800">John Doe</h1>
+                            <p id="preview-title" class="text-lg text-gray-600">Senior Software Engineer</p>
+                            <div class="flex justify-center space-x-4 mt-2 text-sm">
+                                <span class="text-gray-500"><i class="fas fa-envelope mr-1"></i> <span id="preview-email">john.doe@example.com</span></span>
+                                <span class="text-gray-500"><i class="fas fa-phone mr-1"></i> <span id="preview-phone">(123) 456-7890</span></span>
+                                <span class="text-gray-500"><i class="fas fa-map-marker-alt mr-1"></i> <span id="preview-address">New York, NY</span></span>
+                            </div>
+                            <div class="mt-1">
+                                <span class="text-gray-500 text-sm"><i class="fab fa-linkedin mr-1"></i> <span id="preview-linkedin">linkedin.com/in/johndoe</span></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold text-indigo-600 border-b-2 border-indigo-200 pb-2">Professional Summary</h2>
+                            <p id="preview-summary" class="mt-2 text-gray-700">Experienced software engineer with 5+ years of expertise in full-stack web development. Skilled in JavaScript, React, Node.js, and modern cloud infrastructure. Proven track record of delivering scalable solutions that improve performance and user experience.</p>
+                        </div>
+
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold text-indigo-600 border-b-2 border-indigo-200 pb-2">Work Experience</h2>
+                            <div id="preview-experience" class="mt-4">
+                                <div class="experience-preview">
+                                    <div class="flex justify-between">
+                                        <h3 class="text-lg font-semibold text-gray-800">Senior Full Stack Developer</h3>
+                                        <p class="text-gray-600">Jan 2020 - Jun 2023</p>
+                                    </div>
+                                    <p class="text-gray-600 italic">Tech Innovations Inc.</p>
+                                    <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                        <li>Led development of a React-based SaaS product serving 10,000+ users</li>
+                                        <li>Implemented CI/CD pipeline reducing deployment time by 40%</li>
+                                        <li>Mentored 3 junior developers and conducted code reviews</li>
+                                        <li>Optimized database queries improving API response time by 35%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold text-indigo-600 border-b-2 border-indigo-200 pb-2">Education</h2>
+                            <div id="preview-education" class="mt-4">
+                                <div class="education-preview">
+                                    <div class="flex justify-between">
+                                        <h3 class="text-lg font-semibold text-gray-800">Master of Computer Science</h3>
+                                        <p class="text-gray-600">May 2019</p>
+                                    </div>
+                                    <p class="text-gray-600 italic">Stanford University - GPA: 3.8</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-xl font-semibold text-indigo-600 border-b-2 border-indigo-200 pb-2">Skills</h2>
+                            <div id="preview-skills" class="flex flex-wrap gap-2 mt-4">
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">React</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">Node.js</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">MongoDB</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Suggestions Panel -->
+                    <div class="mt-8 bg-indigo-50 p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-4 text-indigo-700 flex items-center">
+                            <i class="fas fa-robot mr-2"></i> AI Suggestions
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-gray-700 font-medium">Professional Summary</p>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">AI Suggestion</span>
+                                </div>
+                                <p class="text-gray-700 mt-2">Your summary is good but could be more impactful with quantifiable achievements. Consider adding metrics like "Improved performance by 40%" or "Reduced load time by 2 seconds".</p>
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">Apply Suggestion</button>
+                                    <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">Ignore</button>
+                                </div>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <div class="flex justify-between items-start">
+                                    <p class="text-gray-700 font-medium">Skills Section</p>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">AI Suggestion</span>
+                                </div>
+                                <p class="text-gray-700 mt-2">Consider adding more keywords from the job description you're targeting, such as "Agile Methodology", "CI/CD", or "Test-Driven Development".</p>
+                                <div class="mt-3 flex space-x-2">
+                                    <button class="bg-indigo-600 text-white px-3 py-1 rounded text-sm">Apply Suggestion</button>
+                                    <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">Ignore</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Function to update the preview based on form inputs
+        function updatePreview() {
+            // Update personal information
+            document.getElementById('preview-name').textContent = document.getElementById('fullName').value;
+            document.getElementById('preview-title').textContent = document.getElementById('jobTitle').value;
+            document.getElementById('preview-email').textContent = document.getElementById('email').value;
+            document.getElementById('preview-phone').textContent = document.getElementById('phone').value;
+            document.getElementById('preview-address').textContent = document.getElementById('address').value;
+            document.getElementById('preview-linkedin').textContent = document.getElementById('linkedin').value;
+            
+            // Update summary
+            document.getElementById('preview-summary').textContent = document.getElementById('summary').value;
+            
+            // Update experience
+            const experienceItems = document.querySelectorAll('.experience-item');
+            let experienceHTML = '';
+            
+            experienceItems.forEach(item => {
+                const title = item.querySelector('.exp-title').value;
+                const company = item.querySelector('.exp-company').value;
+                const start = formatDate(item.querySelector('.exp-start').value);
+                const end = formatDate(item.querySelector('.exp-end').value);
+                const desc = item.querySelector('.exp-desc').value;
+                
+                experienceHTML += `
+                    <div class="experience-preview mb-4">
+                        <div class="flex justify-between">
+                            <h3 class="text-lg font-semibold text-gray-800">${title}</h3>
+                            <p class="text-gray-600">${start} - ${end}</p>
+                        </div>
+                        <p class="text-gray-600 italic">${company}</p>
+                        <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                            ${desc.split('\n').map(line => `<li>${line.replace('- ', '')}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('preview-experience').innerHTML = experienceHTML;
+            
+            // Update education
+            const educationItems = document.querySelectorAll('.education-item');
+            let educationHTML = '';
+            
+            educationItems.forEach(item => {
+                const degree = item.querySelector('.edu-degree').value;
+                const institution = item.querySelector('.edu-institution').value;
+                const date = formatDate(item.querySelector('.edu-date').value, true);
+                const gpa = item.querySelector('.edu-gpa').value;
+                
+                educationHTML += `
+                    <div class="education-preview mb-4">
+                        <div class="flex justify-between">
+                            <h3 class="text-lg font-semibold text-gray-800">${degree}</h3>
+                            <p class="text-gray-600">${date}</p>
+                        </div>
+                        <p class="text-gray-600 italic">${institution}${gpa ? ' - GPA: ' + gpa : ''}</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('preview-education').innerHTML = educationHTML;
+            
+            // Update skills
+            const skillElements = document.querySelectorAll('#skills-container > span');
+            let skillsHTML = '';
+            
+            skillElements.forEach(skill => {
+                const skillText = skill.textContent.split('×')[0].trim();
+                skillsHTML += `<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">${skillText}</span>`;
+            });
+            
+            document.getElementById('preview-skills').innerHTML = skillsHTML;
+        }
+        
+        // Helper function to format dates
+        function formatDate(dateString, yearOnly = false) {
+            if (!dateString) return 'Present';
+            
+            const date = new Date(dateString);
+            if (yearOnly) {
+                return date.toLocaleDateString('en-US', { year: 'numeric' });
+            }
+            
+            return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        }
+        
+        // Add event listeners to all input fields for real-time updates
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+        
+        // Initialize the preview with current values
+        updatePreview();
+
+        // Toggle preview mode
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            const resumeContent = document.getElementById('resume').cloneNode(true);
+            resumeContent.classList.add('mx-auto', 'my-8', 'w-full', 'max-w-4xl');
+            
+            const modal = document.createElement('div');
+            modal.classList.add('fixed', 'inset-0', 'bg-gray-800', 'bg-opacity-75', 'z-50', 'overflow-auto', 'py-8', 'flex', 'items-center', 'justify-center');
+            
+            const modalContent = document.createElement('div');
+            modalContent.classList.add('bg-white', 'rounded-lg', 'relative', 'max-w-4xl', 'w-full', 'm-4');
+            
+            const closeButton = document.createElement('button');
+            closeButton.classList.add('absolute', 'top-4', 'right-4', 'bg-red-600', 'text-white', 'p-2', 'rounded-full');
+            closeButton.innerHTML = '<i class="fas fa-times"></i>';
+            closeButton.addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            modalContent.appendChild(closeButton);
+            modalContent.appendChild(resumeContent);
+            modal.appendChild(modalContent);
+            
+            document.body.appendChild(modal);
+        });
+
+        // Export to PDF functionality
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            const element = document.getElementById('resume');
+            const opt = {
+                margin: 10,
+                filename: 'my_resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        });
+
+        // Save functionality
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const toast = document.createElement('div');
+            toast.classList.add('fixed', 'bottom-4', 'right-4', 'bg-green-600', 'text-white', 'px-4', 'py-2', 'rounded-lg', 'shadow-lg');
+            toast.textContent = 'Resume saved successfully!';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 3000);
+        });
+
+        // Add new experience
+        document.getElementById('add-experience').addEventListener('click', function() {
+            const newExp = document.createElement('div');
+            newExp.classList.add('p-4', 'border', 'rounded-lg', 'relative', 'experience-item', 'mt-4');
+            newExp.innerHTML = `
+                <button class="absolute top-3 right-3 text-gray-400 hover:text-red-500">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-lg exp-title" placeholder="Job Title">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-lg exp-company" placeholder="Company Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                        <input type="month" class="w-full px-4 py-2 border rounded-lg exp-start">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                        <input type="month" class="w-full px-4 py-2 border rounded-lg exp-end">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea class="w-full px-4 py-2 border rounded-lg h-24 exp-desc" placeholder="- Responsibility or achievement"></textarea>
+                </div>
+                <button class="mt-2 bg-indigo-100 text-indigo-600 hover:bg-indigo-200 px-3 py-1 rounded-lg text-sm transition flex items-center">
+                    <i class="fas fa-robot mr-1"></i> Improve with AI
+                </button>
+            `;
+            
+            document.getElementById('experience-container').appendChild(newExp);
+            
+            // Add event listener to the delete button
+            newExp.querySelector('button').addEventListener('click', function() {
+                newExp.remove();
+                updatePreview();
+            });
+            
+            // Add event listeners to inputs for real-time updates
+            newExp.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+        });
+
+        // Add new education
+        document.getElementById('add-education').addEventListener('click', function() {
+            const newEdu = document.createElement('div');
+            newEdu.classList.add('p-4', 'border', 'rounded-lg', 'relative', 'education-item', 'mt-4');
+            newEdu.innerHTML = `
+                <button class="absolute top-3 right-3 text-gray-400 hover:text-red-500">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Degree</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-degree" placeholder="Degree">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Institution</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-institution" placeholder="Institution Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Graduation Year</label>
+                        <input type="month" class="w-full px-4 py-2 border rounded-lg edu-date">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">GPA</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded-lg edu-gpa" placeholder="GPA">
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('education-container').appendChild(newEdu);
+            
+            // Add event listener to the delete button
+            newEdu.querySelector('button').addEventListener('click', function() {
+                newEdu.remove();
+                updatePreview();
+            });
+            
+            // Add event listeners to inputs for real-time updates
+            newEdu.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+        });
+
+        // Add new skill
+        document.getElementById('add-skill').addEventListener('click', function() {
+            const skillInput = document.getElementById('new-skill');
+            const skill = skillInput.value.trim();
+            
+            if (skill) {
+                const skillElement = document.createElement('span');
+                skillElement.classList.add('bg-indigo-100', 'text-indigo-800', 'px-3', 'py-1', 'rounded-full', 'text-sm', 'flex', 'items-center');
+                skillElement.innerHTML = `
+                    ${skill} <button class="ml-1 text-indigo-600 hover:text-indigo-900"><i class="fas fa-times"></i></button>
+                `;
+                
+                // Add event listener to the delete button
+                skillElement.querySelector('button').addEventListener('click', function() {
+                    skillElement.remove();
+                    updatePreview();
+                });
+                
+                document.getElementById('skills-container').appendChild(skillElement);
+                skillInput.value = '';
+                updatePreview();
+            }
+        });
+
+        // Mock AI suggestion functionality
+        document.querySelectorAll('.fa-robot').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const toast = document.createElement('div');
+                toast.classList.add('fixed', 'bottom-4', 'right-4', 'bg-indigo-600', 'text-white', 'px-4', 'py-2', 'rounded-lg', 'shadow-lg');
+                toast.innerHTML = '<i class="fas fa-robot mr-2"></i> AI suggestion applied!';
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 3000);
+            });
+        });
+
+        // Initialize delete buttons for existing items
+        document.querySelectorAll('.relative button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.remove();
+                updatePreview();
+            });
+        });
+    </script>
+
+    <style>
+        .resume-container {
+            min-height: 297mm;
+            width: 210mm;
+        }
+        
+        @media print {
+            header, .bg-indigo-50, button, #app > main > div > div:nth-child(1) {
+                display: none !important;
+            }
+            
+            body, #resume, #app > main > div {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+            }
+            
+            #app > main > div > div:nth-child(2) {
+                width: 100% !important;
+            }
+            
+            .resume-container {
+                width: 100% !important;
+                min-height: auto;
+                border: none !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</body>
+</html>
